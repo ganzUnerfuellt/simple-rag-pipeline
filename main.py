@@ -7,9 +7,11 @@ from create_parser import create_parser
 
 from impl import Datastore, Indexer, Retriever, ResponseGenerator, Evaluator
 
+import warnings
+warnings.filterwarnings("ignore", message=".*pin_memory.*not supported on MPS.*") #filters out shader error on Apple Silicon Macs
 
-DEFAULT_SOURCE_PATH = "sample_data/source/"
-DEFAULT_EVAL_PATH = "sample_data/eval/sample_questions.json"
+DEFAULT_SOURCE_PATH = "data/source/"
+DEFAULT_EVAL_PATH = "data/eval/sample_questions.json"
 
 
 def create_pipeline() -> RAGPipeline:
