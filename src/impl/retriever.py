@@ -9,6 +9,9 @@ class Retriever(BaseRetriever):
 
     def search(self, query: str, top_k: int = 10) -> list[str]:
         search_results = self.datastore.search(query, top_k=top_k * 3)
+        if not search_results:
+            print(f"Warning: No documents found for query: {query}")
+            return [] # Avoid calling rerank with empty list
         reranked_results = self._rerank(query, search_results, top_k=top_k)
         return reranked_results
 
