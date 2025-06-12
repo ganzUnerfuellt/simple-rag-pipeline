@@ -9,7 +9,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 class Datastore(BaseDatastore):
 
-    DB_PATH = "data/sample-lancedb"
+    DB_PATH = "data/lancedb"
     DB_TABLE_NAME = "rag-table"
 
     def __init__(self):
