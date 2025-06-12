@@ -6,7 +6,7 @@ from util.invoke_ai import invoke_ai
 SYSTEM_PROMPT = """
 Use the provided context to provide a concise answer to the user's question.
 If you cannot find the answer in the context, say so. Do not make up information. 
-Give a concise source from the documents.
+Give a concise source from the documents in form of the chapter number.
 """
 
 
