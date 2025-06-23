@@ -24,7 +24,9 @@ class Indexer(BaseIndexer):
     def _items_from_chunks(self, chunks: List[DocChunk]) -> List[DataItem]:
         items = []
         for i, chunk in enumerate(chunks):
-            content_headings = "## " + ", ".join(chunk.meta.headings)
+            # Ensure headings is always a list
+            headings = chunk.meta.headings if isinstance(chunk.meta.headings, (list, tuple)) else []
+            content_headings = "## " + ", ".join(headings)
             content_text = f"{content_headings}\n{chunk.text}"
             source = f"{chunk.meta.origin.filename}:{i}"
             item = DataItem(content=content_text, source=source)
