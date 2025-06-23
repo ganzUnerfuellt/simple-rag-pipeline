@@ -9,7 +9,7 @@ from interface import (
     BaseEvaluator,
     EvaluationResult,
 )
-
+import datetime
 
 @dataclass
 class RAGPipeline:
@@ -20,7 +20,7 @@ class RAGPipeline:
     retriever: BaseRetriever
     response_generator: BaseResponseGenerator
     evaluator: Optional[BaseEvaluator] = None
-
+    
     def reset(self) -> None:
         """Reset the datastore."""
         self.datastore.reset()
@@ -29,7 +29,7 @@ class RAGPipeline:
         """Index a list of documents."""
         items = self.indexer.index(documents)
         self.datastore.add_items(items)
-        print(f"✅ Added {len(items)} items to the datastore.")
+        print(f"✅ Added {len(items)} items to the datastore at {datetime.datetime.now()}.")
 
     def process_query(self, query: str) -> str:
         search_results = self.retriever.search(query)
