@@ -5,16 +5,22 @@ from lancedb.table import Table
 import pyarrow as pa
 from openai import OpenAI
 from concurrent.futures import ThreadPoolExecutor
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class Datastore(BaseDatastore):
 
     DB_PATH = "data/lancedb"
     DB_TABLE_NAME = "rag-table"
-
+    open_ai_api_key = os.getenv("OPENAI_API_KEY")
+    # if not open_ai_api_key:
+    #     print("openAI API key not found in class")
+        
     def __init__(self):
         self.vector_dimensions = 1536
-        self.open_ai_client = OpenAI()
+        self.open_ai_client = OpenAI(api_key=self.open_ai_api_key)
         self.vector_db = lancedb.connect(self.DB_PATH)
         self.table: Table = self._get_table()
 

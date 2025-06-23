@@ -1,7 +1,10 @@
 from interface.base_datastore import BaseDatastore
 from interface.base_retriever import BaseRetriever
 import cohere
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class Retriever(BaseRetriever):
     def __init__(self, datastore: BaseDatastore):
@@ -19,7 +22,11 @@ class Retriever(BaseRetriever):
         self, query: str, search_results: list[str], top_k: int = 10
     ) -> list[str]:
 
-        co = cohere.ClientV2()
+        cohere_api_key = os.getenv("CO_API_KEY")
+        if not cohere_api_key:
+            print("cohere API key not found")
+            
+        co = cohere.ClientV2(api_key=cohere_api_key)
         response = co.rerank(
             model="rerank-v3.5",
             query=query,
